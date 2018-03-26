@@ -11,6 +11,10 @@ const client = new Client({
   ssl: true,
 });
 
+function dbConnectAndQuery(query) {
+
+}
+
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(request, response) {
@@ -18,18 +22,18 @@ app.get('/', function(request, response) {
 });
 
 app.get('/db', function(request, response) {
-
   client.connect();
-
-  client.query('SELECT * FROM test_table;', (err, res) => {
-
-    if (err) client.end();
-
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
-      response.send(row);
+  client.query('SELECT * FROM test_table;', function(err, res) {
+    if (err) {
+      throw err;
+      client.end();
+    } else {
+      for (let row of res.rows) {
+        console.log(JSON.stringify(row));
+        response.send(row);
+      }
+      client.end();
     }
-    client.end();
   });
 });
 
