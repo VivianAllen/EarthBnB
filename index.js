@@ -1,4 +1,5 @@
 var express = require('express');
+var pg = require('pg');
 var app = express();
 
 // app.use(express.static(__dirname + ‘/public’));
@@ -10,6 +11,22 @@ app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(request, response) {
  response.send('Hello World, I am a small node app!');
+});
+
+
+app.get('/db', function(request, response) {
+  pg.connection(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err) {
+        console.error(err);
+        response.send("Error" + err);
+      } else {
+        console.log(result.rows);
+        response.send(result.rows);
+      };
+    });
+  };
 });
 
 app.listen(app.get('port'), function() {

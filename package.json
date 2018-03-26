@@ -21,6 +21,7 @@
   "homepage": "https://github.com/chiakimz/EarthBnB#readme",
   "dependencies": {
     "express": "4.16.3",
-    "jasmine": "3.1.0"
+    "jasmine": "3.1.0",
+    "pg": "7.4.1"
   }
 }
