@@ -1,0 +1,26 @@
+{
+  "name": "earthbnb",
+  "version": "1.0.0",
+  "description": "Airbnb clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chiakimz/EarthBnB.git"
+  },
+  "keywords": [
+    "makersacademy"
+  ],
+  "author": "Vivian,Somayeh,Chiaki,Hemesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chiakimz/EarthBnB/issues"
+  },
+  "homepage": "https://github.com/chiakimz/EarthBnB#readme",
+  "dependencies": {
+    "express": "4.16.3",
+    "jasmine": "3.1.0"
+  }
+}
