@@ -22,7 +22,9 @@ app.get('/db', function(request, response) {
   client.connect();
 
   client.query('SELECT * FROM test_table;', (err, res) => {
-    if (err) throw err;
+
+    if (err) client.end();
+
     for (let row of res.rows) {
       console.log(JSON.stringify(row));
       response.send(row);
