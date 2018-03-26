@@ -1,14 +1,11 @@
 var express = require('express');
 var pg = require('pg');
 var app = express();
-var pool = new pg.Pool()
+var pool = new pg.Pool();
 // app.use(express.static(__dirname + ‘/public’));
 // // views is directory for all template files
 // app.set(‘views’, __dirname + ‘/views’);
 // app.set(‘view engine’, ‘ejs’);
-
-// create a pool
-var pool = new pg.Pool()
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -29,7 +26,7 @@ app.get('/db', function(request, response) {
       };
     });
   });
-  pool.end();
+  //pool.end();
 });
 
 app.listen(app.get('port'), function() {
