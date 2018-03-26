@@ -25,6 +25,7 @@ app.get('/db', function(request, response) {
     if (err) throw err;
     for (let row of res.rows) {
       console.log(JSON.stringify(row));
+      response.send('Hey you got some data from the database!');
     }
     client.end();
   });
