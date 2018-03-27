@@ -1,9 +1,8 @@
 var express = require('express');
-const { Client, Pool } = require('pg');
-
 // ES6 Syntax
 // const pg = require ('pg')
 // const Client = pg.client
+const { Pool } = require('pg');
 
 var app = express();
 // app.use(express.static(__dirname + ‘/public’));
@@ -11,13 +10,11 @@ var app = express();
 // app.set(‘views’, __dirname + ‘/views’);
 // app.set(‘view engine’, ‘ejs’);
 
+// Config settings
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: true,
 });
-// Config Settings
-// SSL is encrypted data
-
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -27,17 +24,19 @@ app.get('/', function(request, response) {
 
 app.get('/db', function(request, response) {
 
-  pool.query('SELECT * FROM test_table;', function(err, res) {
-    if (err) {
-      throw err;
-      pool.end();
-    } else {
-      for (let row of res.rows) {
-        console.log(JSON.stringify(row));
-        response.send(row);
-        pool.end()
-      }
-    }
+  pool.connect()
+    .then(client => {
+      return client.query('SELECT * FROM test_table;')
+        .then(res => {
+          client.release()
+          console.log(res.rows[0])
+          response.send(row);
+        })
+        .catch(e =>{
+          client.release()
+          console.log(err.stack)
+        })
+    })
   });
 
 app.listen(app.get('port'), function() {
