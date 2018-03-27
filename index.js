@@ -1,23 +1,19 @@
 var express = require('express');
-// ES6 Syntax
-// const pg = require ('pg')
-// const Client = pg.client
-const { Pool } = require('pg');
 var ejs = require('ejs');
 
-var app = express();
-app.use(express.static(__dirname + '/public'));
-// // views is directory for all template files
-app.set('views', __dirname + '/views');
+const { Pool } = require('pg');
 
-
-// Config settings
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
+var app = express();
+
+app.use(express.static(__dirname + '/public'));
+
 app.set('port', (process.env.PORT || 5000));
 app.set('view engine', 'ejs')
+app.set('views', __dirname + '/views');
 
 app.get('/', function(request, response) {
  response.render('index', { title: 'Hey', message: 'Somayeh' })
@@ -30,7 +26,6 @@ app.get('/properties', function(request, response) {
       throw err;
     } else {
       client.query('SELECT * FROM bnb_properties;', function(err, res) {
-
         if (err) {
           console.log(err.stack);
         } else {
@@ -43,5 +38,5 @@ app.get('/properties', function(request, response) {
 });
 
 app.listen(app.get('port'), function() {
- console.log('Node app is running on port', app.get('port'));
+  console.log('Node app is running on port', app.get('port'));
 });
