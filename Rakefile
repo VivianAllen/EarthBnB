@@ -1,22 +1,70 @@
 require 'pg'
 
-task :reset_and_setup do
-  Rake::Task[:drop_table].execute
-  Rake::Task[:create_table].execute
-  Rake::Task[:populate_table].execute
+task :first_time_setup do
+  Rake::Task[:create_db].execute
+  Rake::Task[:create_tables].execute
+  Rake::Task[:populate_tables].execute
 end
 
-task :drop_table do
-  p "RAKE: dropping bnb_users table"
-  PG.connect.exec('DROP TABLE IF EXISTS bnb_users;')
+task :full_reset do
+  Rake::Task[:drop_db].execute
+  Rake::Task[:create_db].execute
+  Rake::Task[:drop_tables].execute
+  Rake::Task[:create_tables].execute
+  Rake::Task[:populate_tables].execute
 end
 
-task :create_table do
+task :create_db do
+  p "RAKE: creating bnb_test database"
+  PG.connect.exec('CREATE DATABASE bnb_test;')
+end
+
+task :drop_db do
+  p "RAKE: dropping bnb_test database"
+  PG.connect.exec('DROP DATABASE bnb_test;')
+end
+
+task :create_tables do
+  Rake::Task[:create_user_table].execute
+  Rake::Task[:create_property_table].execute
+end
+
+task :populate_tables do
+  Rake::Task[:populate_user_table].execute
+end
+
+task :drop_tables do
+  Rake::Task[:drop_user_table].execute
+  Rake::Task[:drop_property_table].execute
+end
+
+task :create_user_table do
   p "RAKE: creating bnb_users table"
+  con = PG.connect :dbname => 'bnb_test'
   PG.connect.exec('CREATE TABLE bnb_users (id SERIAL PRIMARY KEY, username VARCHAR(100));')
 end
 
-task :populate_table do
+task :drop_user_table do
+  p "RAKE: dropping bnb_users table"
+  con = PG.connect :dbname => 'bnb_test'
+  PG.connect.exec('DROP TABLE IF EXISTS bnb_users;')
+end
+
+task :populate_user_table do
   p "RAKE: popuating bnb_users table"
+  con = PG.connect :dbname => 'bnb_test'
   PG.connect.exec("INSERT INTO bnb_users(username) VALUES('Normal Q. User');")
+end
+
+task :create_property_table do
+  p "RAKE: creating bnb_properties table"
+  con = PG.connect :dbname => 'bnb_test'
+  PG.connect.exec('CREATE TABLE bnb_properties (id SERIAL PRIMARY KEY, '\
+    'imgsrc VARCHAR(300), description VARCHAR(600));')
+end
+
+task :drop_property_table do
+  p "RAKE: dropping bnb_properties table"
+  con = PG.connect :dbname => 'bnb_test'
+  PG.connect.exec('DROP TABLE IF EXISTS bnb_properties;')
 end

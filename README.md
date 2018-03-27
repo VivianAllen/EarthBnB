@@ -1,12 +1,17 @@
 # MakersBnB
-
+"postgres://localhost:5432"
 **Instructions for use**
 
-To setup local database table for testing, run *bundle install*, then *rake
-reset-and-setup* from a console in the root folder of the app. This will create
-a 'bnb_users' table in your home database and populate it. To remove this table
-from your home database after testing, run *rake drop-table* from a console in
-the root folder of the app.
+To setup local database and database table for testing, run *bundle install*, then *rake
+first_time_setup* from a console in the root folder of the app. This will create a bnb_test
+database in your machine, with a bnb_users and a bnb_properties table populated with some fake
+data. To remove these from your machine after testing, run *rake drop_db* from a console in
+the root folder of the app. To reset a pre-existing database, run *rake full_reset*
+from a console in the root folder of the app.
+
+To tell the heroku app where to look for your database,
+run *export DATABASE_URL=postgres://localhost:5432/bnb_test* from a console in the root folder
+of the app.
 
 ```
 User stories
