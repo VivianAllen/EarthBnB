@@ -25,20 +25,35 @@ app.get('/', function(request, response) {
 
 app.get('/db', function(request, response) {
 
-    // callback - checkout a client
-    pool.connect((err, client, done) => {
-      if (err) throw err
-      client.query('SELECT * FROM test_table;', (err, res) => {
-        done()
-
+  pool.connect(function(err, client, done) {
+    if (err) {
+      throw err;
+    } else {
+      client.query('SELECT * FROM test_table;', function(err, res) {
         if (err) {
-          console.log(err.stack)
+          console.log(err.stack);
         } else {
-          console.log(res.rows[0])
+          console.log(res.rows);
           response.send(JSON.stringify(res.rows[0]));
-        }
-      })
-    })
+        };
+      });
+    }
+  })
+
+    // // callback - checkout a client
+    // pool.connect((err, client, done) => {
+    //   if (err) throw err
+    //   client.query('SELECT * FROM test_table;', (err, res) => {
+    //     done()
+    //
+    //     if (err) {
+    //       console.log(err.stack)
+    //     } else {
+    //       console.log(res.rows[0])
+    //       response.send(JSON.stringify(res.rows[0]));
+    //     }
+    //   })
+    // })
 });
 
 app.listen(app.get('port'), function() {
