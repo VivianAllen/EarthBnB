@@ -25,36 +25,21 @@ app.get('/', function(request, response) {
 
 app.get('/db', function(request, response) {
 
-  // callback - checkout a client
-pool.connect((err, client, done) => {
-  if (err) throw err
-  client.query('SELECT * FROM test_table;', (err, res) => {
-    done()
+    // callback - checkout a client
+    pool.connect((err, client, done) => {
+      if (err) throw err
+      client.query('SELECT * FROM test_table;', (err, res) => {
+        done()
 
-    if (err) {
-      console.log(err.stack)
-    } else {
-      console.log(res.rows[0])
-    }
-  })
-})
-
-
-
-  // pool.connect()
-  //   .then(client => {
-  //     return client.query('SELECT * FROM test_table;')
-  //       .then(res => {
-  //         client.release()
-  //         console.log(res.rows[0])
-  //         response.send(res.rows[0]);
-  //       })
-  //       .catch(e =>{
-  //         client.release()
-  //         console.log(err.stack)
-  //       })
-  //   })
-  });
+        if (err) {
+          console.log(err.stack)
+        } else {
+          console.log(res.rows[0])
+          response.send(JSON.stringify(res.rows[0]));
+        }
+      })
+    })
+});
 
 app.listen(app.get('port'), function() {
  console.log('Node app is running on port', app.get('port'));
