@@ -6,7 +6,7 @@ const { Pool } = require('pg');
 var ejs = require('ejs');
 
 var app = express();
-// app.use(express.static(__dirname + ‘/public’));
+app.use(express.static(__dirname + '/public'));
 // // views is directory for all template files
 app.set('views', __dirname + '/views');
 
