@@ -23,13 +23,13 @@ app.get('/', function(request, response) {
  response.render('index', { title: 'Hey', message: 'Somayeh' })
 });
 
-app.get('/db', function(request, response) {
+app.get('/properties', function(request, response) {
 
   pool.connect(function(err, client, done) {
     if (err) {
       throw err;
     } else {
-      client.query('SELECT * FROM bnb_users;', function(err, res) {
+      client.query('SELECT * FROM bnb_properties;', function(err, res) {
 
         if (err) {
           console.log(err.stack);
