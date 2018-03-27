@@ -1,20 +1,11 @@
 var express = require('express');
-// ES6 Syntax
-// const pg = require ('pg')
-// const Client = pg.client
-const { Pool } = require('pg');
+const db = require('./db');
 
 var app = express();
 // app.use(express.static(__dirname + ‘/public’));
 // // views is directory for all template files
 // app.set(‘views’, __dirname + ‘/views’);
 // app.set(‘view engine’, ‘ejs’);
-
-// Config settings
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -23,22 +14,13 @@ app.get('/', function(request, response) {
 });
 
 app.get('/db', function(request, response) {
-
-  pool.connect(function(err, client, done) {
-    if (err) {
-      throw err;
-    } else {
-      client.query('SELECT * FROM test_table;', function(err, res) {
-  
-        if (err) {
-          console.log(err.stack);
-        } else {
-          console.log(res.rows);
-          response.send(JSON.stringify(res.rows[0]));
-        };
-      });
-    }
-  })
+  db.query('SELECT * FROM bnb_users', function(err, res) {
+      if (err) {
+        return next(err)
+      }
+      res.send(res.rows[0])
+      console.log(res.rows[0])
+    });
 });
 
 app.listen(app.get('port'), function() {

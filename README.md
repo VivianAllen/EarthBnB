@@ -1,6 +1,15 @@
 # MakersBnB
 
-User story
+**Instructions for use**
+
+To setup local database table for testing, run *bundle install*, then *rake
+reset-and-setup* from a console in the root folder of the app. This will create
+a 'bnb_users' table in your home database and populate it. To remove this table
+from your home database after testing, run *rake drop-table* from a console in
+the root folder of the app.
+
+```
+User stories
 
 As a potential user,
 So I can use the service,
@@ -37,3 +46,4 @@ I would like to see the rooms are already booked.
 As a user,
 So that I can take an advantage of every opportunity,
 I would like to keep the space bookable until I've confirmed a request.
+```
