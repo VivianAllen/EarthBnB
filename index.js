@@ -3,12 +3,13 @@ var express = require('express');
 // const pg = require ('pg')
 // const Client = pg.client
 const { Pool } = require('pg');
+var ejs = require('ejs');
 
 var app = express();
 // app.use(express.static(__dirname + ‘/public’));
 // // views is directory for all template files
-// app.set(‘views’, __dirname + ‘/views’);
-// app.set(‘view engine’, ‘ejs’);
+app.set('views', __dirname + '/views');
+
 
 // Config settings
 const pool = new Pool({
@@ -17,9 +18,10 @@ const pool = new Pool({
 });
 
 app.set('port', (process.env.PORT || 5000));
+app.set('view engine', 'ejs')
 
 app.get('/', function(request, response) {
- response.send('Hello World, I am a small node app!');
+ response.render('index', { title: 'Hey', message: 'Somayeh' })
 });
 
 app.get('/db', function(request, response) {
