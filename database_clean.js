@@ -1,7 +1,6 @@
 const { Pool } = require('pg');
 
-const pool = new Pool({
-});
+const pool = new Pool({});
 
 console.log('Dropping earthbnb_test if exists');
 connectAndQuery('DROP DATABASE IF EXISTS earthbnb_test;');
