@@ -14,7 +14,7 @@ app.get('/', function(request, response) {
 });
 
 app.get('/db', function(request, response) {
-  db.query('SELECT * FROM test_table', function(err, res) {
+  db.query('SELECT * FROM bnb_users', function(err, res) {
       if (err) {
         return next(err)
       }
