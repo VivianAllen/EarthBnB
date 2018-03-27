@@ -41,30 +41,30 @@ end
 task :create_user_table do
   p "RAKE: creating bnb_users table"
   con = PG.connect :dbname => 'bnb_test'
-  PG.connect.exec('CREATE TABLE bnb_users (id SERIAL PRIMARY KEY, username VARCHAR(100));')
+  con.exec('CREATE TABLE bnb_users (id SERIAL PRIMARY KEY, username VARCHAR(100));')
 end
 
 task :drop_user_table do
   p "RAKE: dropping bnb_users table"
   con = PG.connect :dbname => 'bnb_test'
-  PG.connect.exec('DROP TABLE IF EXISTS bnb_users;')
+  con.exec('DROP TABLE IF EXISTS bnb_users;')
 end
 
 task :populate_user_table do
   p "RAKE: popuating bnb_users table"
   con = PG.connect :dbname => 'bnb_test'
-  PG.connect.exec("INSERT INTO bnb_users(username) VALUES('Normal Q. User');")
+  con.exec("INSERT INTO bnb_users(username) VALUES('Normal Q. User');")
 end
 
 task :create_property_table do
   p "RAKE: creating bnb_properties table"
   con = PG.connect :dbname => 'bnb_test'
-  PG.connect.exec('CREATE TABLE bnb_properties (id SERIAL PRIMARY KEY, '\
+  con.exec('CREATE TABLE bnb_properties (id SERIAL PRIMARY KEY, '\
     'imgsrc VARCHAR(300), description VARCHAR(600));')
 end
 
 task :drop_property_table do
   p "RAKE: dropping bnb_properties table"
   con = PG.connect :dbname => 'bnb_test'
-  PG.connect.exec('DROP TABLE IF EXISTS bnb_properties;')
+  con.exec('DROP TABLE IF EXISTS bnb_properties;')
 end
