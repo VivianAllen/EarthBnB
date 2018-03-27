@@ -31,6 +31,7 @@ end
 
 task :populate_tables do
   Rake::Task[:populate_user_table].execute
+  Rake::Task[:populate_property_table].execute
 end
 
 task :drop_tables do
@@ -67,4 +68,11 @@ task :drop_property_table do
   p "RAKE: dropping bnb_properties table"
   con = PG.connect :dbname => 'bnb_test'
   con.exec('DROP TABLE IF EXISTS bnb_properties;')
+end
+
+task :populate_property_table do
+  p "RAKE: populating bnb_properties table"
+  con = PG.connect :dbname => 'bnb_test'
+  con.exec("INSERT INTO bnb_properties(imgsrc, description)"\
+  " VALUES('https://inhabitat.com/wp-content/blogs.dir/1/files/2014/08/Tiny-Fem-Forest-treehouse-airbnb.jpg', 'test Modern Apartment');")
 end
