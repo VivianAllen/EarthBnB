@@ -8,5 +8,5 @@ const pool = new Pool({
 module.exports = {
   query: function(text, params, callback) {
     return pool.query(text, params, callback)
-  };
+  }
 };

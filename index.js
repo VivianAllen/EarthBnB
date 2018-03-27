@@ -1,5 +1,5 @@
 var express = require('express');
-const db = require('../db');
+const db = require('./db');
 
 var app = express();
 // app.use(express.static(__dirname + ‘/public’));
