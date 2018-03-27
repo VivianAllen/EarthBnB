@@ -17,6 +17,7 @@ const pool = new Pool({
 });
 
 app.set('port', (process.env.PORT || 5000));
+console.log(process.env.PORT);
 
 app.get('/', function(request, response) {
  response.send('Hello World, I am a small node app!');
@@ -24,19 +25,35 @@ app.get('/', function(request, response) {
 
 app.get('/db', function(request, response) {
 
-  pool.connect()
-    .then(client => {
-      return client.query('SELECT * FROM test_table;')
-        .then(res => {
-          client.release()
-          console.log(res.rows[0])
-          response.send(row);
-        })
-        .catch(e =>{
-          client.release()
-          console.log(err.stack)
-        })
-    })
+  // callback - checkout a client
+pool.connect((err, client, done) => {
+  if (err) throw err
+  client.query('SELECT * FROM test_table;', (err, res) => {
+    done()
+
+    if (err) {
+      console.log(err.stack)
+    } else {
+      console.log(res.rows[0])
+    }
+  })
+})
+
+
+
+  // pool.connect()
+  //   .then(client => {
+  //     return client.query('SELECT * FROM test_table;')
+  //       .then(res => {
+  //         client.release()
+  //         console.log(res.rows[0])
+  //         response.send(res.rows[0]);
+  //       })
+  //       .catch(e =>{
+  //         client.release()
+  //         console.log(err.stack)
+  //       })
+  //   })
   });
 
 app.listen(app.get('port'), function() {
