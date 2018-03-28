@@ -4,6 +4,7 @@ task :first_time_setup do
   Rake::Task[:create_db].execute
   Rake::Task[:create_tables].execute
   Rake::Task[:populate_tables].execute
+  Rake::Task[:set_db_url].execute
 end
 
 task :full_reset do
@@ -12,7 +13,14 @@ task :full_reset do
   Rake::Task[:drop_tables].execute
   Rake::Task[:create_tables].execute
   Rake::Task[:populate_tables].execute
+  Rake::Task[:set_db_url].execute
 end
+
+task :set_db_url do
+  p "RAKE: setting database URL in process.env"
+  system "bash" "-c" 'export DATABASE_URL=postgres://localhost:5432/bnb_test'
+end
+
 
 task :create_db do
   p "RAKE: creating bnb_test database"
