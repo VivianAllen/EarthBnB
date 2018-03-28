@@ -84,4 +84,7 @@ task :populate_property_table do
   con.exec("INSERT INTO bnb_properties(imgsrc, description)"\
   " VALUES('https://inhabitat.com/wp-content/blogs.dir/1/files/2014/08/Tiny-Fem-Forest-treehouse-airbnb.jpg', "\
   "'Come and stay in our treehouse!');")
+  con.exec("INSERT INTO bnb_properties(imgsrc, description)"\
+  " VALUES('test2.jpg', "\
+  "'Come stay in our hobbit house!');")
 end
