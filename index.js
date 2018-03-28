@@ -1,5 +1,6 @@
 var express = require('express');
 var ejs = require('ejs');
+var bodyParser = require('body-parser')
 
 const { Pool } = require('pg');
 
@@ -8,6 +9,14 @@ const pool = new Pool({
 });
 
 var app = express();
+// body parser setup
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded()); // to support URL-encoded bodies
+// end body parser setup
 
 app.use(express.static(__dirname + '/public'));
 
@@ -41,9 +50,9 @@ app.get('/add_property', function(request, response) {
   response.render('add_property')
 });
 
-app.get('/add_property_to_database', function(request, response) {
-  var imgsrc = request.query.imgsrc
-  var description = request.query.description
+app.post('/add_property_to_database', function(request, response) {
+  var imgsrc = request.body.imgsrc;
+  var description = request.body.description;
   var queryString = `INSERT INTO bnb_properties(imgsrc, description) VALUES
   ('${imgsrc}', '${description}')`;
   pool.connect(function(err, client, done) {
