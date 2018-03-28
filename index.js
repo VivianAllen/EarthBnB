@@ -29,14 +29,12 @@ app.get('/properties', function(request, response) {
         if (err) {
           console.log(err.stack);
         } else {
-          response.render('properties', res.rows[0])
-          // console.log(res.rows);
-          // response.send(JSON.stringify(res.rows[0]));
+          //console.log(res.rows);
+          response.render('properties', {results: res.rows})
         };
       });
     }
   })
-
 });
 
 app.listen(app.get('port'), function() {
