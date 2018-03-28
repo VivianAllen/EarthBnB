@@ -50,7 +50,7 @@ end
 task :create_user_table do
   p "RAKE: creating bnb_users table"
   con = PG.connect :dbname => 'bnb_test'
-  con.exec('CREATE TABLE bnb_users (id SERIAL PRIMARY KEY, username VARCHAR(100));')
+  con.exec('CREATE TABLE bnb_users (id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(200));')
 end
 
 task :drop_user_table do

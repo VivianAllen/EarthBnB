@@ -20,8 +20,26 @@ app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views');
 
 app.get('/', function(request, response) {
+  response.render('index');
+});
+
+app.post('/properties', function(request, response) {
+  var username = request.body.username;
+  var password = request.body.password;
+  var queryString = `INSERT INTO bnb_users(username, password) VALUES
+  ('${username}', '${password}')`;
+
+    db.query(queryString, function(err, res) {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(queryString + ' sucessful!')
+      };
+    });
+
   response.redirect('/properties')
 });
+
 
 app.get('/properties', function(request, response) {
   db.query('SELECT * FROM bnb_properties;', function(err, res) {
