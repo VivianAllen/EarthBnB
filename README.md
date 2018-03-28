@@ -1,5 +1,5 @@
 # MakersBnB
-"postgres://localhost:5432"
+
 **Instructions for use**
 
 To setup local database and database table for testing, run `bundle install`, then `rake first_time_setup` from a console in the root folder of the app. This will create a bnb_test database in your machine, with a bnb_users and a bnb_properties table populated with some fake
