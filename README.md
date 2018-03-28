@@ -13,6 +13,10 @@ To tell the heroku app where to look for your database,
 run *export DATABASE_URL=postgres://localhost:5432/bnb_test* from a console in the root folder
 of the app.
 
+Always ensure that you have the latest packages installed by running `npm install`
+
+To run the example tests in bash, type `npm test` into your console!
+
 ```
 User stories
 
