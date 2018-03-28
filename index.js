@@ -1,11 +1,6 @@
 var express = require('express');
 var ejs = require('ejs');
-
-const { Pool } = require('pg');
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || 'postgres://localhost:5432/bnb_test',
-});
+const db = require('./db')
 
 var app = express();
 
@@ -17,28 +12,24 @@ app.set('views', __dirname + '/views');
 
 app.get('/', function(request, response) {
   response.redirect('/properties')
- // response.render('index', { title: 'Hey', message: 'Somayeh' })
 });
 
 app.get('/properties', function(request, response) {
-  pool.connect(function(err, client, done) {
+  db.query('SELECT * FROM bnb_properties;', function(err, res) {
     if (err) {
-      throw err;
+      console.log(err.stack);
     } else {
-      client.query('SELECT * FROM bnb_properties;', function(err, res) {
-        if (err) {
-          console.log(err.stack);
-        } else {
-          //console.log(res.rows);
-          response.render('properties', {results: res.rows})
-        };
-      });
-    }
-  })
+      response.render('properties', { results: res.rows });
+    };
+  });
 });
 
-app.get('/add_property', function(request, response) {
-  response.render('add_property')
+app.get('/properties/add', function(request, response) {
+  response.render('add_property');
+});
+
+app.get('/test', function(request, response) {
+  response.send('hello world');
 });
 
 app.get('/add_property_to_database', function(request, response) {
@@ -46,20 +37,16 @@ app.get('/add_property_to_database', function(request, response) {
   var description = request.query.description
   var queryString = `INSERT INTO bnb_properties(imgsrc, description) VALUES
   ('${imgsrc}', '${description}')`;
-  pool.connect(function(err, client, done) {
-    if (err) {
-      throw err;
-    } else {
-      client.query(queryString, function(err, res) {
-        if (err) {
-          console.log(err.stack);
-        } else {
-          console.log(queryString + ' sucessful!')
-        };
-      });
-    }
-  })
-  response.redirect('/properties')
+
+    db.query(queryString, function(err, res) {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(queryString + ' sucessful!')
+      };
+    });
+
+  response.redirect('/')
 });
 
 app.listen(app.get('port'), function() {
