@@ -7,15 +7,11 @@ data. To remove these from your machine after testing, run `rake drop_db` from a
 the root folder of the app. To reset a pre-existing database, run `rake full_reset`
 from a console in the root folder of the app.
 
-To tell the heroku app where to look for your database,
-run `export DATABASE_URL=postgres://localhost:5432/bnb_test` from a console in the root folder
-of the app.
-
 Always ensure that you have the latest packages installed by running `npm install`
 
 To run the example tests in bash, type `npm test` into your console!
 
-Once you have run the rake setups, the `export` command, and `npm install`, you can run the app locally by entering `heroku local`, which will by default run the app at the following address: http://localhost:5000/
+Once you have run the rake setups and `npm install`, you can run the app locally by entering `heroku local`, which will by default run the app at the following address: http://localhost:5000/
 
 ```
 User stories
