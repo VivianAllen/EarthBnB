@@ -37,6 +37,31 @@ app.get('/properties', function(request, response) {
   })
 });
 
+app.get('/add_property', function(request, response) {
+  response.render('add_property')
+});
+
+app.get('/add_property_to_database', function(request, response) {
+  var imgsrc = request.query.imgsrc
+  var description = request.query.description
+  var queryString = `INSERT INTO bnb_properties(imgsrc, description) VALUES
+  ('${imgsrc}', '${description}')`;
+  pool.connect(function(err, client, done) {
+    if (err) {
+      throw err;
+    } else {
+      client.query(queryString, function(err, res) {
+        if (err) {
+          console.log(err.stack);
+        } else {
+          console.log(queryString + ' sucessful!')
+        };
+      });
+    }
+  })
+  response.redirect('/properties')
+});
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
