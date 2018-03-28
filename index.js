@@ -39,6 +39,15 @@ app.get('/properties', function(request, response) {
 
 });
 
+app.get('/add_property', function(request, response) {
+  response.render('add_property')
+});
+
+app.get('/add_property_to_database', function(request, response) {
+  console.log(request.query.description)
+  //console.log(response)
+});
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
