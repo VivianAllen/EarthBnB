@@ -25,7 +25,11 @@ app.get('/properties', function(request, response) {
 });
 
 app.get('/properties/add', function(request, response) {
-  response.render('add_property')
+  response.render('add_property');
+});
+
+app.get('/test', function(request, response) {
+  res.send('hello world');
 });
 
 app.get('/add_property_to_database', function(request, response) {
