@@ -16,11 +16,11 @@ app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views');
 
 app.get('/', function(request, response) {
- response.render('index', { title: 'Hey', message: 'Somayeh' })
+  response.redirect('/properties')
+ // response.render('index', { title: 'Hey', message: 'Somayeh' })
 });
 
 app.get('/properties', function(request, response) {
-
   pool.connect(function(err, client, done) {
     if (err) {
       throw err;
@@ -29,12 +29,14 @@ app.get('/properties', function(request, response) {
         if (err) {
           console.log(err.stack);
         } else {
-          console.log(res.rows);
-          response.send(JSON.stringify(res.rows[0]));
+          response.render('properties', res.rows[0])
+          // console.log(res.rows);
+          // response.send(JSON.stringify(res.rows[0]));
         };
       });
     }
   })
+
 });
 
 app.listen(app.get('port'), function() {

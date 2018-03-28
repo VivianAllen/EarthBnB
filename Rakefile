@@ -82,5 +82,6 @@ task :populate_property_table do
   p "RAKE: populating bnb_properties table"
   con = PG.connect :dbname => 'bnb_test'
   con.exec("INSERT INTO bnb_properties(imgsrc, description)"\
-  " VALUES('https://inhabitat.com/wp-content/blogs.dir/1/files/2014/08/Tiny-Fem-Forest-treehouse-airbnb.jpg', 'test Modern Apartment');")
+  " VALUES('https://inhabitat.com/wp-content/blogs.dir/1/files/2014/08/Tiny-Fem-Forest-treehouse-airbnb.jpg', "\
+  "'Come and stay in our treehouse!');")
 end
