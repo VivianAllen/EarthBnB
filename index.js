@@ -29,7 +29,7 @@ app.get('/properties/add', function(request, response) {
 });
 
 app.get('/test', function(request, response) {
-  res.send('hello world');
+  response.send('hello world');
 });
 
 app.get('/add_property_to_database', function(request, response) {
