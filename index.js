@@ -41,7 +41,7 @@ app.get('/test', function(request, response) {
   response.send('hello world');
 });
 
-app.post('/add_property_to_database', function(request, response) {
+app.post('/properties/add', function(request, response) {
   var imgsrc = request.body.imgsrc;
   var description = request.body.description;
   var queryString = `INSERT INTO bnb_properties(imgsrc, description) VALUES
