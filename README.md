@@ -1,4 +1,4 @@
-# MakersBnB
+# EarthBnB
 
 **Instructions for use**
 
