@@ -1,12 +1,12 @@
+var bodyParser = require('body-parser');
 var express = require('express');
 var ejs = require('ejs');
-var bodyParser = require('body-parser');
 var session = require('express-session');
 const db = require('./db');
 
 var app = express();
 // body parser setup
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
@@ -27,7 +27,8 @@ app.get('/', function(request, response) {
 });
 
 app.get('/signup', function(request, response) {
-  response.render('signup');
+  var errorMessage = request.session.signupError
+  response.render('signup', { errorMessage: errorMessage });
 });
 
 app.get('/login', function(request, response) {
@@ -36,7 +37,13 @@ app.get('/login', function(request, response) {
   response.render('login', {errorMessage: errorMessage, username: username});
 });
 
-app.post('/session/add_user', function(request, response) {
+app.get('/logout', function(request, response) {
+  request.session.destroy();
+  response.redirect('/login')
+});
+
+app.post('/session/add', function(request, response) {
+  console.log(request.body);
   var username = request.body.username;
   var password = request.body.password;
   var queryString = `INSERT INTO bnb_users(username, password) VALUES
@@ -48,7 +55,7 @@ app.post('/session/add_user', function(request, response) {
       console.log(queryString + ' sucessful!')
     };
   });
-  request.session.username=username;
+  request.session.username = username;
   response.redirect('/properties')
 });
 
@@ -65,8 +72,8 @@ app.post('/session/new', function(request, response) {
       if (res.rows.length === 0) {
         request.session.signinError='Username not found.';
         response.redirect('/login')
-      }else if (res.rows[0].password != password){
-        request.session.signinError='Password wrong.';
+      } else if (res.rows[0].password != password){
+        request.session.signinError = 'Password wrong.';
         response.redirect('/login')
       } else {request.session.username=username;
         response.redirect('/properties')
@@ -87,18 +94,17 @@ app.get('/properties', function(request, response) {
 });
 
 app.get('/properties/add', function(request, response) {
-  response.render('add_property');
-});
-
-app.get('/test', function(request, response) {
-  response.send('hello world');
+  var username = request.session.username || false;
+  response.render('addProperty', { username: username });
 });
 
 app.post('/properties/add', function(request, response) {
   var imgsrc = request.body.imgsrc;
   var description = request.body.description;
-  var queryString = `INSERT INTO bnb_properties(imgsrc, description) VALUES
-  ('${imgsrc}', '${description}')`;
+  var username = request.session.username;
+  var title = request.body.title;
+  var queryString = `INSERT INTO bnb_properties(imgsrc, title, username, description) VALUES
+  ('${imgsrc}', '${title}', '${username}', '${description}')`;
 
     db.query(queryString, function(err, res) {
       if (err) {

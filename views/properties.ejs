@@ -17,11 +17,12 @@
       <div class="column col-12">
         <header class="navbar">
           <section class="navbar-section">
-            <a href="#" class="navbar-brand mr-2">EarthBnB</a>
+            <a href="/properties" class="navbar-brand mr-2">EarthBnB</a>
           </section>
           <section class="navbar-section">
             <% if (username) { %>
               <a href="/user" class="btn btn-link">Welcome, <%= username %>!</a>
+              <a href="/properties/add" class="btn btn-link">Add Property</a>
               <a href="/logout" class="btn btn-link">Logout</a>
             <% } else { %>
               <a href="/login" class="btn btn-link">Login</a>
