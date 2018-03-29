@@ -46,7 +46,7 @@ app.get('/dbs/destroy_tables', function(request, response) {
 
 app.get('/dbs/build_tables', function(request, response) {
   var queryStrings =
-  ['CREATE TABLE bnb_properties (id SERIAL PRIMARY KEY, imgsrc VARCHAR(300), description VARCHAR(600));',
+  ['CREATE TABLE bnb_properties (id SERIAL PRIMARY KEY, imgsrc VARCHAR(300), title VARCHAR(100), username VARCHAR(100), description VARCHAR(600));',
   'CREATE TABLE bnb_users (id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(200));'];
   queryStrings.forEach (function(queryString) {
   db.query(queryString, function(err, res) {
@@ -62,7 +62,7 @@ app.get('/dbs/build_tables', function(request, response) {
 
 app.get('/dbs/populate_tables', function(request, response) {
   var queryStrings =
-  ["INSERT INTO bnb_properties (imgsrc, description) VALUES('test.jpg', 'Come and stay in our cool treehouse!');",
+  ["INSERT INTO bnb_properties (imgsrc, title, username, description) VALUES('test.jpg', My Treehouse, Test User, 'Come and stay in our cool treehouse!');",
   "INSERT INTO bnb_users(username, password) VALUES('Test User', 'password');"];
   queryStrings.forEach (function(queryString) {
   db.query(queryString, function(err, res) {
