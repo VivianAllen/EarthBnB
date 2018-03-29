@@ -16,7 +16,7 @@ app.get('/', function(request, response) {
 
 app.get('/dbs/purge_tables', function(request, response) {
   var queryStrings = ['TRUNCATE TABLE bnb_properties RESTART IDENTITY;',
-  'TRUNCATE TABLE bnb_users RESTART IDENTITY';];
+  'TRUNCATE TABLE bnb_users RESTART IDENTITY;'];
   queryStrings.forEach (function(queryString) {
   db.query(queryString, function(err, res) {
       if (err) {
