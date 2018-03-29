@@ -31,8 +31,9 @@ app.get('/signup', function(request, response) {
 });
 
 app.get('/login', function(request, response) {
+  var username = request.session.username || false;
   var errorMessage = request.session.signinError
-  response.render('login', {errorMessage: errorMessage});
+  response.render('login', {errorMessage: errorMessage, username: username});
 });
 
 app.post('/session/add_user', function(request, response) {

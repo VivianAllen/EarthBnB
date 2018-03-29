@@ -1,21 +1,77 @@
-<head>
-  <title>Earthbnb</title>
-</head>
-<body>
-  <section align="center">
-    <h1 >Welcome back to Earthbnb</h1>
-    <h3>Please sign in below:</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <form action="/session/new" method="post" align="center">
-      <label for="username">Username:</label>
-        <input type="text" name="username" placeholder="Enter your username" class="e"></input></br>
-      </label>
-      <label for="password">Password:</label>
-        <input type=password name="password" placeholder="Enter your password" class="e"></input></br>
-      </label>
-      <input type="submit" value="submit" style=style="background-color:#bab7bc;"></input>
-    </form>
-    <h1><%=errorMessage%></h1>
-  </section>
+    <link rel="stylesheet" href="/spectre.min.css">
+    <link rel="stylesheet" href="/spectre-exp.min.css">
+    <link rel="stylesheet" href="/spectre-icons.min.css">
 
-</body>
+    <title>EarthBnB - Login</title>
+  </head>
+  <body>
+
+  <div class="container" style="padding-top:5px">
+    <div class="columns">
+      <div class="column col-12">
+        <header class="navbar">
+          <section class="navbar-section">
+            <a href="#" class="navbar-brand mr-2">EarthBnB</a>
+          </section>
+          <section class="navbar-section">
+            <% if (username) { %>
+              <a href="/user" class="btn btn-link">Welcome, <%= username %>!</a>
+              <a href="/logout" class="btn btn-link">Logout</a>
+            <% } else { %>
+              <a href="/login" class="btn btn-link">Login</a>
+              <a href="/signup" class="btn btn-link">Sign Up</a>
+            <% } %>
+          </section>
+        </header>
+      </div>
+    </div>
+
+    <% if (errorMessage) { %>
+    <div class="columns">
+      <div class="column col-12">
+        <div class="toast toast-error">
+          <%= errorMessage %>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+    <div class="columns">
+      <div class="column col-4 centered"  style="padding-top:15px">
+        <div class="empty">
+          <div class="empty-icon">
+            <i class="icon icon-people"></i>
+          </div>
+          <p class="empty-title h5">Welcome back to EarthBnB</p>
+          <p class="empty-subtitle">Please sign in below</p>
+
+          <form class="form-horizontal" action="/session/new" method="post">
+            <div class="form-group">
+              <div class="col-9 centered">
+                <input name="username" class="form-input" type="text" id="input-username" placeholder="Username">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-9 centered">
+                <input name="password" class="form-input" type="password" id="input-password" placeholder="Password">
+              </div>
+            </div>
+            <div class="col-9 centered">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </body>
+</html>
