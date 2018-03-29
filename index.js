@@ -30,9 +30,9 @@ app.get('/signup', function(request, response) {
   response.render('signup');
 });
 
-app.get('/signin', function(request, response) {
+app.get('/login', function(request, response) {
   var errorMessage = request.session.signinError
-  response.render('signin', {errorMessage: errorMessage});
+  response.render('login', {errorMessage: errorMessage});
 });
 
 app.post('/session/add_user', function(request, response) {
@@ -52,7 +52,7 @@ app.post('/session/add_user', function(request, response) {
 });
 
 
-app.post('/session/signin_user', function(request, response) {
+app.post('/session/new', function(request, response) {
   var username = request.body.username;
   var password = request.body.password;
   var foo;
@@ -63,10 +63,10 @@ app.post('/session/signin_user', function(request, response) {
     } else {
       if (res.rows.length === 0) {
         request.session.signinError='Username not found.';
-        response.redirect('/signin')
+        response.redirect('/login')
       }else if (res.rows[0].password != password){
         request.session.signinError='Password wrong.';
-        response.redirect('/signin')
+        response.redirect('/login')
       } else {request.session.username=username;
         response.redirect('/properties')
       }
@@ -75,7 +75,7 @@ app.post('/session/signin_user', function(request, response) {
 });
 
 app.get('/properties', function(request, response) {
-  var username = request.session.username || 'anonymous';
+  var username = request.session.username || false;
   db.query('SELECT * FROM bnb_properties;', function(err, res) {
     if (err) {
       console.log(err.stack);
