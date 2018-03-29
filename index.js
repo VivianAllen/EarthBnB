@@ -84,6 +84,69 @@ app.post('/properties/add', function(request, response) {
   response.redirect('/')
 });
 
+app.get('/dbs/purge_tables', function(request, response) {
+  var queryStrings = ['TRUNCATE TABLE bnb_properties RESTART IDENTITY;',
+  'TRUNCATE TABLE bnb_users RESTART IDENTITY';];
+  queryStrings.forEach (function(queryString) {
+  db.query(queryString, function(err, res) {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(queryString + ' sucessful!')
+      };
+    });
+  });
+  response.redirect('/')
+});
+
+app.get('/dbs/destroy_tables', function(request, response) {
+  var queryStrings = ['DROP TABLE bnb_properties;',
+  'DROP TABLE bnb_users;'];
+  queryStrings.forEach (function(queryString) {
+  db.query(queryString, function(err, res) {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(queryString + ' sucessful!')
+      };
+    });
+  });
+  response.redirect('/')
+});
+
+app.get('/dbs/build_tables', function(request, response) {
+  var queryStrings =
+  ['CREATE TABLE bnb_properties (id SERIAL PRIMARY KEY, imgsrc VARCHAR(300), description VARCHAR(600));',
+  'CREATE TABLE bnb_users (id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(200));'];
+  queryStrings.forEach (function(queryString) {
+  db.query(queryString, function(err, res) {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(queryString + ' sucessful!')
+      };
+    });
+  });
+  response.redirect('/')
+});
+
+app.get('/dbs/populate_tables', function(request, response) {
+  var queryStrings =
+  ["INSERT INTO bnb_properties (imgsrc, description) VALUES('test.jpg', 'Come and stay in our cool treehouse!');",
+  "INSERT INTO bnb_users(username, password) VALUES('Test User', 'password');"];
+  queryStrings.forEach (function(queryString) {
+  db.query(queryString, function(err, res) {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(queryString + ' sucessful!')
+      };
+    });
+  });
+  response.redirect('/')
+});
+
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
