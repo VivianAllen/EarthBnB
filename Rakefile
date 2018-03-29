@@ -68,8 +68,7 @@ end
 task :create_property_table do
   p "RAKE: creating bnb_properties table"
   con = PG.connect :dbname => 'bnb_test'
-  con.exec('CREATE TABLE bnb_properties (id SERIAL PRIMARY KEY, '\
-    'imgsrc VARCHAR(300), description VARCHAR(600));')
+  con.exec('CREATE TABLE bnb_properties (id SERIAL PRIMARY KEY, imgsrc VARCHAR(300), title VARCHAR(100), username VARCHAR(100), description VARCHAR(600));')    
 end
 
 task :drop_property_table do
@@ -81,10 +80,15 @@ end
 task :populate_property_table do
   p "RAKE: populating bnb_properties table"
   con = PG.connect :dbname => 'bnb_test'
-  con.exec("INSERT INTO bnb_properties(imgsrc, description)"\
-  " VALUES('https://inhabitat.com/wp-content/blogs.dir/1/files/2014/08/Tiny-Fem-Forest-treehouse-airbnb.jpg', "\
-  "'Come and stay in our treehouse!');")
-  con.exec("INSERT INTO bnb_properties(imgsrc, description)"\
+  con.exec("INSERT INTO bnb_properties(imgsrc, title, username, description)"\
+  " VALUES('test.jpg', "\
+  "'My Treehouse', "\
+  "'Test User', "\
+  "'Come and stay in our cool treehouse!');")
+
+  con.exec("INSERT INTO bnb_properties(imgsrc, title, username, description)"\
   " VALUES('test2.jpg', "\
-  "'Come stay in our hobbit house!');")
+  "'Another House', "\
+  "'Test User', "\
+  "'Come and stay in another cool house!');")
 end
