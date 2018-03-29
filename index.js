@@ -1,7 +1,11 @@
+// ====== load dependencies ====== //
+
 var express = require('express');
 var ejs = require('ejs');
 var bodyParser = require('body-parser')
 const db = require('./db')
+
+// ====== setup  ====== //
 
 var app = express();
 // body parser setup
@@ -18,6 +22,8 @@ app.use(express.static(__dirname + '/public'));
 app.set('port', (process.env.PORT || 5000));
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views');
+
+// ====== routes (pages) ====== //
 
 app.get('/', function(request, response) {
   response.render('index');
@@ -36,10 +42,8 @@ app.post('/properties', function(request, response) {
         console.log(queryString + ' sucessful!')
       };
     });
-
   response.redirect('/properties')
 });
-
 
 app.get('/properties', function(request, response) {
   db.query('SELECT * FROM bnb_properties;', function(err, res) {
@@ -55,10 +59,6 @@ app.get('/properties/add', function(request, response) {
   response.render('add_property');
 });
 
-app.get('/test', function(request, response) {
-  response.send('hello world');
-});
-
 app.post('/properties/add', function(request, response) {
   var imgsrc = request.body.imgsrc;
   var description = request.body.description;
@@ -72,7 +72,6 @@ app.post('/properties/add', function(request, response) {
         console.log(queryString + ' sucessful!')
       };
     });
-
   response.redirect('/')
 });
 
