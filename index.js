@@ -22,6 +22,7 @@ app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views');
 
 app.get('/', function(request, response) {
+  request.session.signinError='';
   response.redirect('/properties');
 });
 
@@ -29,24 +30,49 @@ app.get('/signup', function(request, response) {
   response.render('signup');
 });
 
+app.get('/signin', function(request, response) {
+  var errorMessage = request.session.signinError
+  response.render('signin', {errorMessage: errorMessage});
+});
 
 app.post('/session/add_user', function(request, response) {
   var username = request.body.username;
   var password = request.body.password;
   var queryString = `INSERT INTO bnb_users(username, password) VALUES
   ('${username}', '${password}')`;
-
-    db.query(queryString, function(err, res) {
-      if (err) {
-        console.log(err.stack);
-      } else {
-        console.log(queryString + ' sucessful!')
-      };
-    });
+  db.query(queryString, function(err, res) {
+    if (err) {
+      console.log(err.stack);
+    } else {
+      console.log(queryString + ' sucessful!')
+    };
+  });
   request.session.username=username;
   response.redirect('/properties')
 });
 
+
+app.post('/session/signin_user', function(request, response) {
+  var username = request.body.username;
+  var password = request.body.password;
+  var foo;
+  var queryString = `SELECT * FROM bnb_users WHERE username = '${username}'`;
+  db.query(queryString, function(err, res) {
+    if (err) {
+      console.log(err.stack);
+    } else {
+      if (res.rows.length === 0) {
+        request.session.signinError='Username not found.';
+        response.redirect('/signin')
+      }else if (res.rows[0].password != password){
+        request.session.signinError='Password wrong.';
+        response.redirect('/signin')
+      } else {request.session.username=username;
+        response.redirect('/properties')
+      }
+    };
+  });
+});
 
 app.get('/properties', function(request, response) {
   var username = request.session.username || 'anonymous';
