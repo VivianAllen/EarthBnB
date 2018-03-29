@@ -62,7 +62,7 @@ end
 task :populate_user_table do
   p "RAKE: popuating bnb_users table"
   con = PG.connect :dbname => 'bnb_test'
-  con.exec("INSERT INTO bnb_users(username) VALUES('Normal Q. User');")
+  con.exec("INSERT INTO bnb_users(username, password) VALUES('Test User', 'password');")
 end
 
 task :create_property_table do

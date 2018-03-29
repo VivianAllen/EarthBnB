@@ -6,6 +6,10 @@
   <form method="get" action="/signup">
     <button type="submit">Sign up</button>
   </form>
+  <form method="get" action="/signin">
+    <button type="submit">Sign in</button>
+  </form>
+
   <% results.forEach(function(property) { %>
     <h1><%= property.description %><h1>
     <img src=<%= property.imgsrc %>>
