@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/spectre-exp.min.css">
     <link rel="stylesheet" href="/spectre-icons.min.css">
 
-    <title>EarthBnB - Login</title>
+    <title>EarthBnB - Properties</title>
   </head>
   <body>
 
@@ -32,39 +32,29 @@
       </div>
     </div>
 
-    <% if (errorMessage) { %>
     <div class="columns">
-      <div class="column col-12">
-        <div class="toast toast-error">
-          <%= errorMessage %>
-        </div>
-      </div>
-    </div>
-    <% } %>
-
-    <div class="columns">
-      <div class="column col-4 centered"  style="padding-top:15px">
+      <div class="column col-6 centered" style="padding-top:15px">
         <div class="empty">
-          <div class="empty-icon">
-            <i class="icon icon-people icon-3x"></i>
-          </div>
-          <p class="empty-title h5">Welcome back to EarthBnB</p>
-          <p class="empty-subtitle">Please sign in below</p>
-
-          <form class="form-horizontal" action="/session/new" method="post">
+          <h4>List your property below</h4>
+          <form class="form-horizontal" action="/properties/add" method="post">
             <div class="form-group">
               <div class="col-9 centered">
-                <input name="username" class="form-input" type="text" id="input-username" placeholder="Username">
+                <input name="title" class="form-input" type="text" id="input-title" placeholder="Please enter a descriptive title">
               </div>
             </div>
             <div class="form-group">
               <div class="col-9 centered">
-                <input name="password" class="form-input" type="password" id="input-password" placeholder="Password">
+                <input name="imgsrc" class="form-input" type="text" id="input-password" placeholder="Please enter a image url">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-9 centered">
+                <textarea name="description" class="form-input" id="input-description" placeholder="Enter a short description of your property here" rows="8"></textarea>
               </div>
             </div>
             <div class="col-9 centered">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Add property</button>
               </div>
             </div>
           </form>
@@ -75,3 +65,23 @@
 
   </body>
 </html>
+
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Adding Property</title>
+  </head>
+  <body>
+
+    <form action="/properties/add" method="post">
+      Image URL:<br>
+      <input type="text" name="imgsrc" value="please enter image URL here"><br>
+      Property Description:<br>
+      <input type="text" name="description" value="please describe your property here"><br>
+      <input type="submit" value="Submit">
+    </form>
+
+  </body>
+</html> -->
